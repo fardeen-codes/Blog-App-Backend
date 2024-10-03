@@ -1,25 +1,36 @@
+// Import the Express framework
 const express = require("express");
+
+// Create an instance of an Express application
 const app = express();
 
+// Load environment variables from the .env file
 require("dotenv").config();
-const PORT = process.env.PORT || 3000
 
-// middleware
+// Set the port to the value from the environment or default to 3000
+const PORT = process.env.PORT || 3000;
+
+// Middleware to parse incoming JSON requests
 app.use(express.json());
 
-const blog = require('./routes/blog')
+// Import the blog routes
+const blog = require('./routes/blog');
 
-// mount
-app.use("/api/v1", blog)
+// Mount the blog routes under the /api/v1 path
+app.use("/api/v1", blog);
 
-const connectWithDb = require("./config/database")
+// Import the database connection configuration
+const connectWithDb = require("./config/database");
+// Establish a connection to the database
 connectWithDb();
 
-//start the server
-app.listen(PORT,() => {
-    console.log(`Server started at ${PORT}`)
-})
+// Start the server and listen on the specified port
+app.listen(PORT, () => {
+    console.log(`Server started at ${PORT}`);
+});
 
+// Define a route for the home page
 app.get('/', (req, res) => {
-    res.send('Home Page!')
-})
+    // Respond with a simple message
+    res.send('Home Page!');
+});
